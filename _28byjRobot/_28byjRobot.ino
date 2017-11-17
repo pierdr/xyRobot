@@ -46,12 +46,15 @@ unsigned long eventTime = 0;
 float lerpValue=0;
 float cX=0,cY=0,rX=0,rY=0;
 
-
+//--------------------------------------------------------------------------
+//UTILS
+//--------------------------------------------------------------------------
+#define DEBUG 0
 
 void setup() {
     Serial.begin(115200);
-    mm.addLeftMotor(8,9,10,11);
-    mm.addRightMotor(4,5,6,7);
+    mm.addLeftMotor(8,9,10,11,false);
+    mm.addRightMotor(4,5,6,7,true);
 }
 
 

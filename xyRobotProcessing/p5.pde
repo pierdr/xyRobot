@@ -7,9 +7,25 @@ void initP5()
   cp5.addButton("moveRmCcw");//.moveTo("RIGHT MOTOR");
   cp5.addButton("moveRmCw");//.moveTo("RIGHT MOTOR");
   
+  cp5.addButton("calibrate");
+  
+  cp5.addButton("drawSample");
+  cp5.addButton("stop");
   cp5.addButton("printV");
   
 }
+public void stop(int theValue) {
+  stopRobot();
+  
+}
+void keyPressed()
+{ 
+  if(key=='s')
+  {
+     stopRobot();
+  }
+}
+
 public void moveLmCw(int theValue) {
   arduino.write("E-");
 }
@@ -21,6 +37,14 @@ public void moveRmCcw(int theValue) {
 }
 public void moveRmCw(int theValue) {
   arduino.write("Q-");
+}
+public void calibrate(int theValue) {
+  arduino.write("C-");
+}
+public void drawSample(int theValue)
+{
+  sampleDraw();
+  
 }
 public void printV(int theValue)
 {

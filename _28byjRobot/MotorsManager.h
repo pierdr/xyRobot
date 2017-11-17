@@ -1,38 +1,66 @@
-#define M1_ZERO_STEP 1265
-#define M2_ZERO_STEP 1265
+ //550*MM_TO_STEPS
 
 #define HALF_L 550          
 #define FRAME_ORIGIN_X 320  
-#define FRAME_ORIGIN_Y 30 
+#define FRAME_ORIGIN_Y 330 
 
-#define MM_TO_STEPS 2.37 //9.3
+#define MM_TO_STEPS 25 //9.3
+
+#define L_ZERO_STEP 645*MM_TO_STEPS
+#define R_ZERO_STEP 690*MM_TO_STEPS
+
+#define INIT -1
+#define DRAW 0
+#define IDLE 1
+
+
+
 
 class MotorsManager
 {
     Motor *lm;
     Motor *rm;
 
-    int positionLm,positionRm;
+    int lCurrentSteps;
+    int rCurrentSteps;
+
+    int lTargetSteps;
+    int rTargetSteps;
+    int state = INIT;
+
+//    int rWorkingSteps;
+//    int lWorkingSteps;
+
+    float lerpValue = 0.0;    
+    
+    //int positionLm,positionRm;
+    
     public:
     MotorsManager::MotorsManager(){
       
     }
 
-    void MotorsManager::addLeftMotor(int pin1, int pin2, int pin3, int pin4)
+    void MotorsManager::addLeftMotor(int pin1, int pin2, int pin3, int pin4,boolean invDirection)
     {
-       lm = new Motor(pin1,pin2,pin3,pin4);
+       lm = new Motor(pin1,pin2,pin3,pin4,invDirection);
         
     }
     
-    void MotorsManager::addRightMotor(int pin1, int pin2, int pin3, int pin4)
+    void MotorsManager::addRightMotor(int pin1, int pin2, int pin3, int pin4,boolean invDirection)
     {
-       rm = new Motor(pin1,pin2,pin3,pin4); 
+       rm = new Motor(pin1,pin2,pin3,pin4,invDirection); 
        
     }
     void MotorsManager::testMotors()
     {
       rm->moveTo(true, 4096);
       lm->moveTo(true, 4096);
+    }
+    void MotorsManager::reset()
+    {
+      lm->setTarget(L_ZERO_STEP);
+      rm->setTarget(R_ZERO_STEP);
+      changeState(DRAW);
     }
     void MotorsManager::moveLeftMotor(boolean ccw,int steps)
     {
@@ -43,6 +71,26 @@ class MotorsManager
         rm->moveTo(ccw,steps); 
     }
     void MotorsManager::update(){
+      if(state==DRAW)
+      {   
+           //determine next steps
+            lerpValue+=0.005;
+            if(lerpValue>=1.0)
+            {
+              lerpValue = 1.0;
+            }
+           
+            lm->moveAt(lerpValue);
+            
+
+            rm->moveAt(lerpValue);
+
+            if(lerpValue == 1.0)
+            {
+              changeState(IDLE);
+            }
+        
+      }
       rm->update();
       lm->update();
     }
@@ -54,31 +102,43 @@ class MotorsManager
     }
     void MotorsManager::moveTo(float x,float y)
     {
-//#define M1_ZERO_STEP 4550
-//#define M2_ZERO_STEP 4550
-//
-//#define HALF_L 550          
-//#define FRAME_ORIGIN_X 320  
-//#define FRAME_ORIGIN_Y 30 
-//
-//#define MM_TO_STEPS 9.3
-      positionLm=(sqrt(sq(HALF_L+(x-FRAME_ORIGIN_X))+sq(y+FRAME_ORIGIN_Y)))*MM_TO_STEPS;   
-      positionRm=(sqrt(sq(HALF_L-(x-FRAME_ORIGIN_X))+sq(y+FRAME_ORIGIN_Y)))*MM_TO_STEPS;
-      Serial.print("steps:");
-      Serial.print(positionLm);
-      Serial.print(" ");
-      Serial.println(positionRm);
-      lm->moveTo((lm->getSteps()>positionLm)?true:false,positionLm);
-      rm->moveTo((rm->getSteps()>positionRm)?false:true,positionRm);
-      Serial.print("L-");   
-          
-
+      if(state!=DRAW)
+      {
+        lTargetSteps=(sqrt(sq(HALF_L+(x-FRAME_ORIGIN_X))+sq(y+FRAME_ORIGIN_Y)))*MM_TO_STEPS;   
+        rTargetSteps=(sqrt(sq(HALF_L-(x-FRAME_ORIGIN_X))+sq(y+FRAME_ORIGIN_Y)))*MM_TO_STEPS;
+//        lTotalTravelSteps = lTargetSteps - lCurrentSteps;
+//        rTotalTravelSteps = rTargetSteps - rCurrentSteps;
+        lm->setTarget(lTargetSteps);
+        rm->setTarget(rTargetSteps);
+        
+        lerpValue = 0.0;
+        
+        //lm->movprintlneTo((lm->getSteps()>positionLm)?true:false,positionLm);
+        //rm->moveTo((rm->getSteps()>positionRm)?false:true,positionRm);
+        changeState(DRAW);
+      }
     }
     void MotorsManager::calibrate()
     {
-       lm->calibrate(M1_ZERO_STEP);
-       rm->calibrate(M2_ZERO_STEP);
+       lm->calibrate(L_ZERO_STEP);
+       rm->calibrate(R_ZERO_STEP);
     }
-    
+    void MotorsManager::changeState(int newState)
+    {
+        switch(newState) 
+        {
+          case IDLE:
+            if(state == DRAW){
+              //NOTIFY STOPPED
+              Serial.print("L-");
+            }
+          break;
+          case DRAW:
+          break;
+          case INIT:
+          break;
+        }
+        state = newState;
+    }
 };
 

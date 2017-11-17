@@ -19,31 +19,30 @@ void updateCommands()
 {
   
   if (stringComplete) {
-    Serial.print("test:");
-    Serial.println(inputString);
+    
     //MOVE LEFT MOTOR CW
     if(inputString=="E")
     {
-      Serial.println("move left motor cw");
-        mm.moveLeftMotor(true,128);
+      //Serial.println("move left motor cw");
+        mm.moveLeftMotor(true,512);
     }
     //MOVE LEFT MOTOR CCW
     else if(inputString == "R")
     {
-      Serial.println("move left motor ccw");
-        mm.moveLeftMotor(false,128);
+      //Serial.println("move left motor ccw");
+        mm.moveLeftMotor(false,512);
     }
     //MOVE RIGHT MOTOR CW
     else if(inputString=="Q")
     {
-      Serial.println("move right motor cw");
-        mm.moveRightMotor(true,128);
+     // Serial.println("move right motor cw");
+        mm.moveRightMotor(true,512);
     }
     //MOVE RIGHT MOTOR CCW
     else if(inputString == "W")
     {
-      Serial.println("move right motor ccw");
-        mm.moveRightMotor(false,128);
+     // Serial.println("move right motor ccw");
+        mm.moveRightMotor(false,512);
     }
     else if(inputString == "T")
     {
@@ -53,7 +52,16 @@ void updateCommands()
     //CALIBRATE
     else if(inputString=="C")
     {
-     mm.calibrate();
+      mm.calibrate();
+      Serial.print("C-");
+    
+    }
+    //RESET
+    else if(inputString=="S")
+    {
+      
+      Serial.print("S-");
+      mm.reset();
     }
     //MOVE
     else if(inputString.indexOf("l")!=-1)
@@ -106,4 +114,16 @@ void convertCoordinates(float x,float y)
    //positions[1]=(sqrt(sq(HALF_L-(x-FRAME_ORIGIN_X))+sq(y+FRAME_ORIGIN_Y)))/CM_TO_STEP;   
 }
 
+//void print(String s)
+//{
+//  if(DEBUG){
+//    Serial.print("s");
+//  }
+//}
+//void println(String s)
+//{
+//  if(DEBUG){
+//    Serial.println("s");
+//  }
+//}
 
