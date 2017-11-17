@@ -2,16 +2,17 @@
 static final boolean isSimulated = true;
 
 
-//** CONNECTIONS **//
+//** MORE **//
 import tramontana.library.*;
 import websockets.*;
 
 import controlP5.*;
 import processing.serial.*;
 
-
-
 ControlP5 cp5;
+Serial arduino;
+
+
 
 
 void setup()
@@ -26,5 +27,7 @@ void setup()
 void draw()
 {
   background(255);
-  
+  serialEvent();
+  color(0);
+  text(segmentCounter,100,100);
 }

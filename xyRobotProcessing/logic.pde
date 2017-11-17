@@ -91,16 +91,12 @@ void arrivedToPoint()
 }
 void stopRobot()
 {
-        arduino.write("l320,0-");
+       arduino.write("l320,0-");
        changeState(IDLE);
        robotHead.setColorEmbedded(0,0,0,0);
        cameraRemote.setRelayEmbedded(RELAY_NUM,1);
 }
-void addPart1()
-{
-  
 
-}
 void loadImgFromFile(String fileName)
 {
   println("load");
