@@ -10,7 +10,8 @@ import controlP5.*;
 import processing.serial.*;
 
 ControlP5 cp5;
-Serial arduino;
+
+controller main;
 
 
 
@@ -18,7 +19,11 @@ Serial arduino;
 void setup()
 {
   size(720,320);
+  
   initP5();
+  
+  main = new controller(this,true);
+  
   initSerial();
   initLogic();
   initTramotana();
@@ -27,7 +32,8 @@ void setup()
 void draw()
 {
   background(255);
-  serialEvent();
+  //serialEvent();
+  main.updateSerial();
   color(0);
   text(segmentCounter,100,100);
 }

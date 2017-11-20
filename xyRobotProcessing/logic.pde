@@ -6,7 +6,7 @@ final static int GO_TO_START  = 3;
 final static int DRAW_SEGMENT = 4;
 final static int NEXT_SEGMENT = 5;
 
-final static String fileName = "43_58_log.txt";
+final static String fileName = "51_55_log.txt";
 
 int state = INIT;
  
@@ -52,7 +52,7 @@ void startDrawing()
  
   segmentCounter = 0;
  
-  cameraRemote.setRelayEmbedded(RELAY_NUM,0);
+  main.startDrawing();
 
   changeState(GO_TO_START);
   segments.get(segmentCounter).goToStart();
@@ -91,10 +91,8 @@ void arrivedToPoint()
 }
 void stopRobot()
 {
-       arduino.write("l320,0-");
+       main.stopRobot();
        changeState(IDLE);
-       robotHead.setColorEmbedded(0,0,0,0);
-       cameraRemote.setRelayEmbedded(RELAY_NUM,1);
 }
 
 void loadImgFromFile(String fileName)
@@ -110,7 +108,7 @@ void loadImgFromFile(String fileName)
     }  
   }
   
-  sortSegments();
+ // sortSegments();
   
 }
 void sortSegments()

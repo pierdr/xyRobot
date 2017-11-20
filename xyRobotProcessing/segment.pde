@@ -14,14 +14,11 @@ class segment{
    }
    public void goToStart()
    {
-      arduino.write("l"+startX+","+startY+"-");
-      robotHead.setColorEmbedded(0,0,0,0);
+      main.goToStart(startX,startY);
    }
    public void goToEnd()
    {
-     arduino.write("l"+endX+","+endY+"-");
-     //robotHead.setColorEmbedded(0,255,0,0);
-     robotHead.setColorEmbedded(0,(int)(red(col)/divider),(int)(green(col)/divider),(int)(blue(col)/divider));
+     main.goToEnd(endX,endY,color((int)(red(col)/divider),(int)(green(col)/divider),(int)(blue(col)/divider)));
    }
    public void swapEndWithStart()
    {

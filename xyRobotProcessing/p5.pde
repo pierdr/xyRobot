@@ -22,24 +22,24 @@ void keyPressed()
 { 
   if(key=='s')
   {
-     stopRobot();
+     main.stopRobot();
   }
 }
 
 public void moveLmCw(int theValue) {
-  arduino.write("E-");
+  main.moveMotor(LEFT,CW);
 }
 public void moveLmCCw(int theValue) {
-  arduino.write("R-");
+  main.moveMotor(LEFT,CCW);
 }
 public void moveRmCcw(int theValue) {
-  arduino.write("W-");
+  main.moveMotor(RIGHT,CCW);
 }
 public void moveRmCw(int theValue) {
-  arduino.write("Q-");
+  main.moveMotor(RIGHT,CW);
 }
 public void calibrate(int theValue) {
-  arduino.write("C-");
+  main.calibrate();
 }
 public void drawSample(int theValue)
 {
@@ -48,5 +48,5 @@ public void drawSample(int theValue)
 }
 public void printV(int theValue)
 {
-  arduino.write("T-");
+ main.printValueDebug(); 
 }
