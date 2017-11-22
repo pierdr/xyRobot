@@ -15,14 +15,14 @@ void initP5()
   
 }
 public void stop(int theValue) {
-  stopRobot();
+   stopRobot();
   
 }
 void keyPressed()
 { 
   if(key=='s')
   {
-     main.stopRobot();
+     stopRobot();
   }
 }
 

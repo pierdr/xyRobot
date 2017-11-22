@@ -32,6 +32,7 @@ class Motor{
         for(int i=0;i<steps;i++)
         {
           stepper->step((cw)?dir:!dir);
+          delayMicroseconds(10);
         }
     }
   }

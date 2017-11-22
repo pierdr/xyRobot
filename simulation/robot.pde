@@ -15,6 +15,7 @@ class robot{
   color currentColor = color(0,0,0);
   float lerpValue = 1.0;
   ArrayList<PVector> points;
+  ArrayList<segment> segments;
   float recordTimeStart = 0;
   float recordTimeEnd  = 0;
   
@@ -25,6 +26,7 @@ class robot{
     rightSpool = new spool(width-15,15);
     leftSpool.angle = 0.5;
     points = new ArrayList();
+    segments = new ArrayList();
   }
   void draw()
   {
@@ -37,11 +39,17 @@ class robot{
     ellipse(currentPosX,currentPosY,10,10);
     
     //DRAW LINES//
-    stroke(255);
-    fill(255);
+    stroke(80);
+    fill(80);
     for(int i=1;i<points.size();i++)
     {
       line(points.get(i-1).x,points.get(i-1).y,points.get(i).x,points.get(i).y);
+    }
+    
+    for(int i=1;i<segments.size()-1;i++)
+    {
+      
+      segments.get(i).draw();
     }
     fill(currentColor);
     stroke(currentColor);
@@ -54,14 +62,16 @@ class robot{
   {
     if(lerpValue >= 0 && lerpValue<1.0)
     {
-      lerpValue+=0.1;
+      lerpValue+=0.3;
       currentPosX = lerp(startPosX,targetPosX,lerpValue);
       currentPosY = lerp(startPosY,targetPosY,lerpValue);
       recordTimeEnd = millis();
       if(lerpValue >=1.0)
       {
         //ARRIVED!
-        points.add(new PVector(currentPosX, currentPosY));
+        
+          points.add(new PVector(currentPosX, currentPosY));
+        
         return 1;
       }
     }
@@ -79,6 +89,10 @@ class robot{
     startPosX = currentPosX;
     startPosY = currentPosY;
     currentColor = c;
+    if(c!=color(0,0,0))
+    {
+      segments.add(new segment(currentPosX,currentPosY,x,y,c));
+    }  
   }
   void start()
   {

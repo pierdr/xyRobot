@@ -22,7 +22,7 @@ void setup()
   
   initP5();
   
-  main = new controller(this,true);
+  main = new controller(this,true);//TRUE -> simulation FALSE -> realmotors 
   
   initSerial();
   initLogic();

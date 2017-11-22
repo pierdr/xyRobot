@@ -87,8 +87,9 @@ void stopRobot()
 {
   if(!isSimulated)
   {
-        robotHead.setColorEmbedded(0,0,0,0);
+       robotHead.setColorEmbedded(0,0,0,0);
        cameraRemote.setRelayEmbedded(RELAY_NUM,1);
+      arduino.write("l320,0-");
   }
   else
   {
