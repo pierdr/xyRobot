@@ -97,11 +97,14 @@ class robot{
   void start()
   {
     points.clear();
+    segments.clear();
     recordTimeStart = millis();
   }
   void stop()
   {
-    
+    points.clear();
+    segments.clear();
     recordTimeEnd = millis();
+    
   }
 }

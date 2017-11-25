@@ -6,7 +6,7 @@ final static int GO_TO_START  = 3;
 final static int DRAW_SEGMENT = 4;
 final static int NEXT_SEGMENT = 5;
 
-final static String fileName = "50_6_log.txt";
+final static String fileName = "46_36_log.txt";
 
 int state = INIT;
  

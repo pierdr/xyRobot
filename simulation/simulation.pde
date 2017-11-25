@@ -39,7 +39,7 @@ void webSocketEvent(String msg){
     }
     else if(c.getString(0)=="stop")
     {
-      
+      r.stop();
     }
   }
   else if(c.size()==2)
