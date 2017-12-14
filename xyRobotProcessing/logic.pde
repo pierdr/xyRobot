@@ -6,7 +6,7 @@ final static int GO_TO_START  = 3;
 final static int DRAW_SEGMENT = 4;
 final static int NEXT_SEGMENT = 5;
 
-final static String fileName = "46_36_log.txt";
+final static String fileName = "43_47_log.txt";
 
 int state = INIT;
  
@@ -103,12 +103,12 @@ void loadImgFromFile(String fileName)
     String result[] = split(lines[i], ',');
     if(result.length>=6)
     {
-    //println(result[6],parseFloat(result[6]),parseInt(result[5]),parseInt(result[6]));
+    //println(parseInt(result[0]),parseInt(result[1]),parseInt(result[2]),parseInt(result[3]),parseFloat(result[4]),parseInt(result[5]),parseInt(result[6]));
     segments.add(new segment(parseInt(result[0]),parseInt(result[1]),parseInt(result[2]),parseInt(result[3]),color(parseInt(result[4]),parseInt(result[5]),parseInt(result[6]))));
     }  
   }
   
-  sortSegments();
+ // sortSegments();
   
 }
 void sortSegments()

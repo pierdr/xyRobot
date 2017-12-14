@@ -89,6 +89,7 @@ class robot{
     startPosX = currentPosX;
     startPosY = currentPosY;
     currentColor = c;
+    
     if(c!=color(0,0,0))
     {
       segments.add(new segment(currentPosX,currentPosY,x,y,c));

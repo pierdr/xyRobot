@@ -26,10 +26,10 @@ class controller{
       try{
         if(HAS_CAMERA)
         {
-          cameraRemote = new Tramontana(parent,"192.168.1.14");
+          cameraRemote = new Tramontana(parent,"192.168.1.16");
           cameraRemote.setRelayEmbedded(RELAY_NUM,1);
         }
-        robotHead = new Tramontana(parent,"192.168.2.3");
+        robotHead = new Tramontana(parent,"192.168.1.17");
         
         println("serial");
         String portName = Serial.list()[1];

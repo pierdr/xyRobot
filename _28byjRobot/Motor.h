@@ -15,7 +15,7 @@ class Motor{
   Motor::Motor(int pin1,int pin2, int pin3, int pin4, boolean invDirection)
   {
     stepper = new CheapStepper( pin1,pin2,pin3,pin4);
-    stepper->setRpm(10);
+    stepper->setRpm(10);//was 10
     stepper->setTotalSteps(4096);
     dir = invDirection;
     

@@ -31,6 +31,7 @@ void draw()
 void webSocketEvent(String msg){
  
  JSONArray c = parseJSONArray(msg);
+ println(c);
   if(c.size()==1)
   {
     if(c.getString(0)=="start")
@@ -48,6 +49,7 @@ void webSocketEvent(String msg){
   }
   else if(c.size()==5)
   {
+    println(c.getInt(2),c.getInt(3),c.getInt(4));
      r.goTo(c.getInt(0),c.getInt(1), color(c.getInt(2),c.getInt(3),c.getInt(4)));
   }
 }
