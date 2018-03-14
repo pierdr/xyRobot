@@ -6,7 +6,15 @@ final static int GO_TO_START  = 3;
 final static int DRAW_SEGMENT = 4;
 final static int NEXT_SEGMENT = 5;
 
-final static String fileName = "46_59_log.txt";
+
+
+final static String fileName = "004.txt";
+
+
+final static boolean multipleDrawings = false;
+final static int numDrawings = 5;
+int countDrawings = 2;
+
 
 int state = INIT;
  
