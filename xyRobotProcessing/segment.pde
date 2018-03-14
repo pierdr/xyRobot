@@ -2,7 +2,7 @@ class segment{
    public int startX,startY;
    public int endX,endY;
    color col;
-   int divider = 4;
+   int divider = 3;
    
    segment(int sX,int sY,int eX, int eY, color c)
    {
@@ -14,11 +14,14 @@ class segment{
    }
    public void goToStart()
    {
-      main.goToStart(startX,startY);
+      arduino.write("l"+startX+","+startY+"-");
+      robotHead.setColorEmbedded(0,0,0,0);
    }
    public void goToEnd()
    {
-     main.goToEnd(endX,endY,color((int)(red(col)/divider),(int)(green(col)/divider),(int)(blue(col)/divider)));
+     arduino.write("l"+endX+","+endY+"-");
+     //robotHead.setColorEmbedded(0,255,0,0);
+     robotHead.setColorEmbedded(0,(int)(red(col)/(divider)),(int)(green(col)/divider),(int)(blue(col)/(divider)));
    }
    public void swapEndWithStart()
    {

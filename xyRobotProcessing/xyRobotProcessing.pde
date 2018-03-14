@@ -1,8 +1,3 @@
-//** SIMULATOR **//
-static final boolean isSimulated = true;
-
-
-//** MORE **//
 import tramontana.library.*;
 import websockets.*;
 
@@ -10,8 +5,7 @@ import controlP5.*;
 import processing.serial.*;
 
 ControlP5 cp5;
-
-controller main;
+Serial arduino;
 
 
 
@@ -19,11 +13,7 @@ controller main;
 void setup()
 {
   size(720,320);
-  
   initP5();
-  
-  main = new controller(this,false);//TRUE -> simulation FALSE -> realmotors 
-  
   initSerial();
   initLogic();
   initTramotana();
@@ -32,8 +22,7 @@ void setup()
 void draw()
 {
   background(255);
-  //serialEvent();
-  main.updateSerial();
+  serialEvent();
   color(0);
   text(segmentCounter,100,100);
 }

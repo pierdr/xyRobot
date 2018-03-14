@@ -6,11 +6,7 @@ final static int GO_TO_START  = 3;
 final static int DRAW_SEGMENT = 4;
 final static int NEXT_SEGMENT = 5;
 
-final static String fileName = "004.txt";
-
-final static boolean multipleDrawings = false;
-final static int numDrawings = 5;
-int countDrawings = 2;
+final static String fileName = "46_59_log.txt";
 
 int state = INIT;
  
@@ -56,7 +52,7 @@ void startDrawing()
  
   segmentCounter = 0;
  
-  main.startDrawing();
+  cameraRemote.setRelayEmbedded(RELAY_NUM,0);
 
   changeState(GO_TO_START);
   segments.get(segmentCounter).goToStart();
@@ -93,40 +89,18 @@ void arrivedToPoint()
     segments.get(segmentCounter).goToEnd();
   }
 }
-void haltRobot()
-{
-  main.stopRobot();
-  changeState(IDLE);
-}
 void stopRobot()
 {
-   if(multipleDrawings)
-   {
-     if(countDrawings<numDrawings)
-     {
-       main.closeShutter();
-       delay(1000);
+        arduino.write("l320,0-");
        changeState(IDLE);
-       
-       segments = new ArrayList();
-       String name = (String)((countDrawings<10)?("00"+countDrawings):((countDrawings>=10 && countDrawings<100)?("0"+countDrawings):(countDrawings+"")));
-       loadImgFromFile(name+".txt");
-       println("now drawing "+countDrawings);
-       countDrawings++;
-       
-       startDrawing();
-     }
-     else
-     {
-       haltRobot();
-     }
-   }
-   else
-   {
-       haltRobot();
-   }
+       robotHead.setColorEmbedded(0,0,0,0);
+       cameraRemote.setRelayEmbedded(RELAY_NUM,1);
 }
+void addPart1()
+{
+  
 
+}
 void loadImgFromFile(String fileName)
 {
   println("load");
@@ -135,12 +109,12 @@ void loadImgFromFile(String fileName)
     String result[] = split(lines[i], ',');
     if(result.length>=6)
     {
-    //println(parseInt(result[0]),parseInt(result[1]),parseInt(result[2]),parseInt(result[3]),parseFloat(result[4]),parseInt(result[5]),parseInt(result[6]));
+    //println(result[6],parseFloat(result[6]),parseInt(result[5]),parseInt(result[6]));
     segments.add(new segment(parseInt(result[0]),parseInt(result[1]),parseInt(result[2]),parseInt(result[3]),color(parseInt(result[4]),parseInt(result[5]),parseInt(result[6]))));
     }  
   }
   
- // sortSegments();
+  sortSegments();
   
 }
 void sortSegments()
