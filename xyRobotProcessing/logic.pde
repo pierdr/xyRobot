@@ -8,7 +8,7 @@ final static int NEXT_SEGMENT = 5;
 
 
 
-final static String fileName = "004.txt";
+final static String fileName = "15_54_log.txt";
 
 
 final static boolean multipleDrawings = false;
@@ -48,6 +48,7 @@ void changeState(int newState){
 
 void sampleDraw()
 {
+  
   segments.clear();
  
   loadImgFromFile(fileName);
@@ -57,13 +58,14 @@ void sampleDraw()
 
 void startDrawing()
 {
+   
+  segmentCounter = 0; //<>// //<>//
  
-  segmentCounter = 0;
- 
-  cameraRemote.setRelayEmbedded(RELAY_NUM,0);
+  main.startDrawing();
 
   changeState(GO_TO_START);
   segments.get(segmentCounter).goToStart();
+  //main.goToStart(segments.get(segmentCounter).startX,segments.get(segmentCounter).startY);
   
  
 }
@@ -99,10 +101,11 @@ void arrivedToPoint()
 }
 void stopRobot()
 {
-        arduino.write("l320,0-");
+      
+      
+       main.stopRobot();
        changeState(IDLE);
-       robotHead.setColorEmbedded(0,0,0,0);
-       cameraRemote.setRelayEmbedded(RELAY_NUM,1);
+       
 }
 void addPart1()
 {

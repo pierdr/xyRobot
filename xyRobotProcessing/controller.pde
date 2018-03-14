@@ -8,8 +8,8 @@ final static boolean HAS_CAMERA = true;
 
 class controller{
   
-  boolean isSimulated = true;
-  final static boolean HAS_HEAD_SIMULATION = true;
+  boolean isSimulated = false;
+  final static boolean HAS_HEAD_SIMULATION = false;
   
   Serial arduino;
   
@@ -31,14 +31,14 @@ class controller{
         if(HAS_CAMERA)
         {
           cameraRemote = new Tramontana(parent,"192.168.1.16");
-          cameraRemote.setRelayEmbedded(RELAY_NUM,1);
+          cameraRemote.setRelayEmbeddedOff(RELAY_NUM);
         }
 
-        robotHead = new Tramontana(parent,"192.168.1.14");
+        robotHead = new Tramontana(parent,"192.168.1.16");
 
         
         println("serial");
-        String portName = Serial.list()[2];
+        String portName = Serial.list()[1];
         
         arduino = new Serial(parent, portName, 115200);
       }
@@ -61,7 +61,7 @@ class controller{
     this(parent,false);
   }
  void updateSerial() {
-   println(isSimulated);
+   
    if(!isSimulated)
    {
   while (arduino.available()>0) {
@@ -90,11 +90,12 @@ class controller{
 }
 void startDrawing()
 {
+
   if(!isSimulated)
   {
     if(HAS_CAMERA)
     {
-      cameraRemote.setRelayEmbedded(RELAY_NUM,0);
+      cameraRemote.setRelayEmbeddedOn(RELAY_NUM);
     }  
   }
   else{
@@ -108,7 +109,7 @@ void closeShutter()
     if(HAS_CAMERA)
        {
          robotHead.setColorEmbedded(0,0,0,0);
-         cameraRemote.setRelayEmbedded(RELAY_NUM,1);
+         cameraRemote.setRelayEmbeddedOff(RELAY_NUM);
        }
   }
 }
@@ -119,9 +120,9 @@ void stopRobot()
        robotHead.setColorEmbedded(0,0,0,0);
        if(HAS_CAMERA)
        {
-         cameraRemote.setRelayEmbedded(RELAY_NUM,1); //<>//
+         cameraRemote.setRelayEmbeddedOff(RELAY_NUM); //<>//
        }
-      arduino.write("l320,0-");
+      arduino.write("S-");
   }
   else
   {
@@ -167,10 +168,12 @@ void goToEnd(int endX, int endY, color c )
 
 void moveMotor(int side, int orientation)
 {
+  println("MOVING "+side+" ORIENT "+orientation);
   if(side == RIGHT)
   {
     if(orientation ==  CCW)
     {
+      
       arduino.write("W-");
     }
     else if(orientation == CW)
