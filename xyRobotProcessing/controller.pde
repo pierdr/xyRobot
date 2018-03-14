@@ -2,7 +2,7 @@ final static int RIGHT = 1;
 final static int LEFT =  0;
 final static int CCW  = 2;
 final static int CW   = 3;
-final static boolean HAS_CAMERA = false;
+final static boolean HAS_CAMERA = true;
 class controller{
   
   boolean isSimulated = false;
@@ -29,10 +29,10 @@ class controller{
           cameraRemote = new Tramontana(parent,"192.168.1.16");
           cameraRemote.setRelayEmbedded(RELAY_NUM,1);
         }
-        robotHead = new Tramontana(parent,"192.168.1.17");
+        robotHead = new Tramontana(parent,"192.168.1.14");
         
         println("serial");
-        String portName = Serial.list()[1];
+        String portName = Serial.list()[2];
         
         arduino = new Serial(parent, portName, 115200);
       }
@@ -90,6 +90,17 @@ void startDrawing()
      simulator.sendMessage("[\"start\"]");
   }
 }
+void closeShutter()
+{
+  if(!isSimulated)
+  {
+    if(HAS_CAMERA)
+       {
+         robotHead.setColorEmbedded(0,0,0,0);
+         cameraRemote.setRelayEmbedded(RELAY_NUM,1);
+       }
+  }
+}
 void stopRobot()
 {
   if(!isSimulated)
@@ -97,7 +108,7 @@ void stopRobot()
        robotHead.setColorEmbedded(0,0,0,0);
        if(HAS_CAMERA)
        {
-         cameraRemote.setRelayEmbedded(RELAY_NUM,1);
+         cameraRemote.setRelayEmbedded(RELAY_NUM,1); //<>//
        }
       arduino.write("l320,0-");
   }

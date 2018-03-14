@@ -6,11 +6,11 @@ final static int GO_TO_START  = 3;
 final static int DRAW_SEGMENT = 4;
 final static int NEXT_SEGMENT = 5;
 
-final static String fileName = "43_47_log.txt";
+final static String fileName = "004.txt";
 
-final static boolean multipleDrawings = true;
-final static int numDrawings = 201;
-int countDrawings = 0;
+final static boolean multipleDrawings = false;
+final static int numDrawings = 5;
+int countDrawings = 2;
 
 int state = INIT;
  
@@ -93,30 +93,37 @@ void arrivedToPoint()
     segments.get(segmentCounter).goToEnd();
   }
 }
+void haltRobot()
+{
+  main.stopRobot();
+  changeState(IDLE);
+}
 void stopRobot()
 {
    if(multipleDrawings)
    {
      if(countDrawings<numDrawings)
      {
+       main.closeShutter();
+       delay(1000);
        changeState(IDLE);
        
        segments = new ArrayList();
-       String name = (String)((countDrawings<10)?("00"+countDrawings):((countDrawings>10 && countDrawings<100)?("0"+countDrawings):(countDrawings+"")));
-       loadImgFromFile(name+"_points_log.txt");
+       String name = (String)((countDrawings<10)?("00"+countDrawings):((countDrawings>=10 && countDrawings<100)?("0"+countDrawings):(countDrawings+"")));
+       loadImgFromFile(name+".txt");
+       println("now drawing "+countDrawings);
        countDrawings++;
+       
        startDrawing();
      }
      else
      {
-       main.stopRobot();
-       changeState(IDLE);
+       haltRobot();
      }
    }
    else
    {
-       main.stopRobot();
-       changeState(IDLE);
+       haltRobot();
    }
 }
 
