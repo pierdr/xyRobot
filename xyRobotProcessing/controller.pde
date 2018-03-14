@@ -3,9 +3,11 @@ final static int LEFT =  0;
 final static int CCW  = 2;
 final static int CW   = 3;
 final static boolean HAS_CAMERA = false;
+
 class controller{
   
-  boolean isSimulated = false;
+  boolean isSimulated = true;
+  final static boolean HAS_HEAD_SIMULATION = true;
   
   Serial arduino;
   
@@ -29,7 +31,7 @@ class controller{
           cameraRemote = new Tramontana(parent,"192.168.1.16");
           cameraRemote.setRelayEmbedded(RELAY_NUM,1);
         }
-        robotHead = new Tramontana(parent,"192.168.1.17");
+        robotHead = new Tramontana(parent,"172.20.10.3");
         
         println("serial");
         String portName = Serial.list()[1];
@@ -44,6 +46,10 @@ class controller{
     else
     {
       simulator= new WebsocketServer(parent,8025,"/");
+      if(HAS_HEAD_SIMULATION)
+      {
+        robotHead = new Tramontana(parent,"172.20.10.3");
+      }
     }
   }
   controller(PApplet parent)
@@ -51,6 +57,7 @@ class controller{
     this(parent,false);
   }
  void updateSerial() {
+   println(isSimulated);
    if(!isSimulated)
    {
   while (arduino.available()>0) {
@@ -104,6 +111,10 @@ void stopRobot()
   else
   {
     simulator.sendMessage("[\"stop\"]");
+    if(HAS_HEAD_SIMULATION)
+    {
+      robotHead.setColorEmbedded(0,0,0,0);
+    }
   }
 }
 void goToStart(int startX, int startY)
@@ -116,6 +127,10 @@ void goToStart(int startX, int startY)
   else
   {
     simulator.sendMessage("["+startX+","+startY+"]");
+    if(HAS_HEAD_SIMULATION)
+    {
+      robotHead.setColorEmbedded(0,0,0,0);
+    }
   }
 }
 void goToEnd(int endX, int endY, color c )
@@ -128,6 +143,10 @@ void goToEnd(int endX, int endY, color c )
   else
   {
     simulator.sendMessage("["+endX+","+endY+","+(int)(red(c))+","+(int)(green(c))+","+(int)(blue(c))+"]");
+    if(HAS_HEAD_SIMULATION)
+    {
+       robotHead.setColorEmbedded(0,(int)(red(c)),(int)(green(c)),(int)(blue(c)));
+    }
   }
 }
 

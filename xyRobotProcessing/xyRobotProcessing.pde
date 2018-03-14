@@ -1,6 +1,4 @@
 //** SIMULATOR **//
-static final boolean isSimulated = true;
-
 
 //** MORE **//
 import tramontana.library.*;
@@ -22,7 +20,7 @@ void setup()
   
   initP5();
   
-  main = new controller(this,false);//TRUE -> simulation FALSE -> realmotors 
+  main = new controller(this,true);//TRUE -> simulation FALSE -> realmotors 
   
   initSerial();
   initLogic();
