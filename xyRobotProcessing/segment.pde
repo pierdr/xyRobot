@@ -2,7 +2,9 @@ class segment{
    public int startX,startY;
    public int endX,endY;
    color col;
-   int divider = 70;
+
+   int divider = 4;
+
    
    segment(int sX,int sY,int eX, int eY, color c)
    {

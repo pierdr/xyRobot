@@ -15,7 +15,7 @@ void initP5()
   
 }
 public void stop(int theValue) {
-   stopRobot();
+   haltRobot();
   
 }
 void keyPressed()
