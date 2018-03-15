@@ -11,9 +11,9 @@ final static int NEXT_SEGMENT = 5;
 final static String fileName = "15_54_log.txt";
 
 
-final static boolean multipleDrawings = false;
-final static int numDrawings = 5;
-int countDrawings = 2;
+final static boolean multipleDrawings = true;
+final static int numDrawings = 29;
+int countDrawings = 1;
 
 
 int state = INIT;
@@ -101,11 +101,29 @@ void arrivedToPoint()
 }
 void stopRobot()
 {
-      
-      
-       main.stopRobot();
+   if(multipleDrawings)
+   {
+     if(countDrawings<numDrawings)
+     {
        changeState(IDLE);
        
+       segments = new ArrayList();
+       String name = (String)((countDrawings<10)?("00"+countDrawings):((countDrawings>10 && countDrawings<100)?("0"+countDrawings):(countDrawings+"")));
+       loadImgFromFile(name+"_log.txt");
+       countDrawings++;
+       startDrawing();
+     }
+     else
+     {
+       main.stopRobot();
+       changeState(IDLE);
+     }
+   }
+   else
+   {
+       main.stopRobot();
+       changeState(IDLE);
+   }   
 }
 void addPart1()
 {

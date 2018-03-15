@@ -30,8 +30,8 @@ class controller{
       try{
         if(HAS_CAMERA)
         {
-          cameraRemote = new Tramontana(parent,"192.168.1.16");
-          cameraRemote.setRelayEmbeddedOff(RELAY_NUM);
+          cameraRemote = new Tramontana(parent,"192.168.1.17");
+          cameraRemote.setRelayEmbeddedOn(RELAY_NUM);
         }
 
         robotHead = new Tramontana(parent,"192.168.1.16");
@@ -95,7 +95,7 @@ void startDrawing()
   {
     if(HAS_CAMERA)
     {
-      cameraRemote.setRelayEmbeddedOn(RELAY_NUM);
+      cameraRemote.setRelayEmbeddedOff(RELAY_NUM);
     }  
   }
   else{
@@ -109,7 +109,7 @@ void closeShutter()
     if(HAS_CAMERA)
        {
          robotHead.setColorEmbedded(0,0,0,0);
-         cameraRemote.setRelayEmbeddedOff(RELAY_NUM);
+         cameraRemote.setRelayEmbeddedOn(RELAY_NUM);
        }
   }
 }
@@ -120,7 +120,7 @@ void stopRobot()
        robotHead.setColorEmbedded(0,0,0,0);
        if(HAS_CAMERA)
        {
-         cameraRemote.setRelayEmbeddedOff(RELAY_NUM); //<>//
+         cameraRemote.setRelayEmbeddedOn(RELAY_NUM); //<>//
        }
       arduino.write("S-");
   }
