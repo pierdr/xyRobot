@@ -8,7 +8,7 @@ final static int NEXT_SEGMENT = 5;
 
 
 
-final static String fileName = "15_54_log.txt";
+final static String fileName = "000_log.txt";
 
 
 final static boolean multipleDrawings = true;
@@ -108,10 +108,21 @@ void stopRobot()
        changeState(IDLE);
        
        segments = new ArrayList();
-       String name = (String)((countDrawings<10)?("00"+countDrawings):((countDrawings>10 && countDrawings<100)?("0"+countDrawings):(countDrawings+"")));
-       loadImgFromFile(name+"_log.txt");
+       String name = (String)((countDrawings<10)?("00"+countDrawings):((countDrawings>=10 && countDrawings<100)?("0"+countDrawings):(countDrawings+"")));
+       boolean fileExists = loadImgFromFile(name+"_log.txt");
        countDrawings++;
-       startDrawing();
+      
+       if(fileExists)
+       {
+          main.closeShutter();
+          delay(2000);
+          startDrawing();
+       }
+       else
+       {
+         main.stopRobot();
+         changeState(IDLE);
+       }
      }
      else
      {
@@ -130,8 +141,21 @@ void addPart1()
   
 
 }
-void loadImgFromFile(String fileName)
+boolean loadImgFromFile(String fileName)
 {
+  
+ 
+  File f = new File(dataPath(fileName));
+   
+  if (f.exists())
+  {
+    println("load");
+  }
+  else
+  {
+    println("error - no such file\n ->  "+fileName);
+    return false;
+  }
   println("load");
   String[] lines = loadStrings(fileName);
   for (int i = 0 ; i < lines.length; i++) {
@@ -144,6 +168,7 @@ void loadImgFromFile(String fileName)
   }
   
   sortSegments();
+  return true;
   
 }
 void sortSegments()

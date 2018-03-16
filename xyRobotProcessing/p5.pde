@@ -15,7 +15,15 @@ void initP5()
   
 }
 public void stop(int theValue) {
+  if(multipleDrawings)
+  {
+    countDrawings = numDrawings;
+  }
   stopRobot();
+  if(multipleDrawings)
+  {
+    countDrawings = 0;
+  }
   
 }
 void keyPressed()
