@@ -20,7 +20,7 @@ void setup()
   size(720,320);
   initP5();
 
-  main = new controller(this,false);//TRUE -> simulation FALSE -> realmotors 
+  main = new controller(this,true);//TRUE -> simulation FALSE -> realmotors 
   
   //initSerial();
   initLogic();
