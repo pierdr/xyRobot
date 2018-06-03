@@ -4,11 +4,13 @@ final static int CCW  = 2;
 final static int CW   = 3;
 
 
-final static boolean HAS_CAMERA = true;
+final static boolean HAS_CAMERA = false;
+final static boolean HAS_CAMERA_OF = true;
+
 
 class controller{
   
-  boolean isSimulated = false;
+  boolean isSimulated = true;
   final static boolean HAS_HEAD_SIMULATION = false;
   
   Serial arduino;
@@ -34,7 +36,7 @@ class controller{
           cameraRemote.setRelayEmbeddedOn(RELAY_NUM);
         }
 
-        robotHead = new Tramontana(parent,"192.168.1.16");
+        robotHead = new Tramontana(parent,"10.0.1.2");
 
         
         println("serial");
@@ -97,6 +99,10 @@ void startDrawing()
     {
       cameraRemote.setRelayEmbeddedOff(RELAY_NUM);
     }  
+    if(HAS_CAMERA_OF)
+    {
+      startOSC();
+    }
   }
   else{
      simulator.sendMessage("[\"start\"]");
@@ -106,10 +112,15 @@ void closeShutter()
 {
   if(!isSimulated)
   {
+    robotHead.setColorEmbedded(0,0,0,0);
     if(HAS_CAMERA)
        {
-         robotHead.setColorEmbedded(0,0,0,0);
+         
          cameraRemote.setRelayEmbeddedOn(RELAY_NUM);
+       }
+       if(HAS_CAMERA_OF)
+       {
+         stopOSC();
        }
   }
 }
@@ -121,6 +132,10 @@ void stopRobot()
        if(HAS_CAMERA)
        {
          cameraRemote.setRelayEmbeddedOn(RELAY_NUM); //<>//
+       }
+       if(HAS_CAMERA_OF)
+       {
+         stopOSC();
        }
       arduino.write("S-");
   }
@@ -153,8 +168,9 @@ void goToEnd(int endX, int endY, color c )
 {
   if(!isSimulated)
   {
-      arduino.write("l"+endX+","+endY+"-");
+     arduino.write("l"+endX+","+endY+"-");
      robotHead.setColorEmbedded(0,(int)(red(c)),(int)(green(c)),(int)(blue(c)));
+     
   }
   else
   {
@@ -169,6 +185,11 @@ void goToEnd(int endX, int endY, color c )
 void moveMotor(int side, int orientation)
 {
   println("MOVING "+side+" ORIENT "+orientation);
+  if(arduino==null)
+  {
+    println("ERROR - ARDUINO not initailized");
+    return;
+  }
   if(side == RIGHT)
   {
     if(orientation ==  CCW)

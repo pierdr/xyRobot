@@ -2,7 +2,7 @@ String inputString;
 
 void initSerial()
 {
-  String portName = Serial.list()[3];
+  String portName = Serial.list()[1];
   println(Serial.list());
   arduino = new Serial(this, portName, 115200);
 }

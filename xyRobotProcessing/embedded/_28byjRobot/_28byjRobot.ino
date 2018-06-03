@@ -53,8 +53,9 @@ float cX=0,cY=0,rX=0,rY=0;
 
 void setup() {
     Serial.begin(115200);
-    mm.addLeftMotor(8,9,10,11,false);
-    mm.addRightMotor(4,5,6,7,true);
+    mm.addRightMotor(11,10,9,8,false);
+//    mm.addRightMotor(4,5,6,7,true);
+    mm.addLeftMotor(7,6,5,4,false);
 }
 
 

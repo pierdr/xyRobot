@@ -5,15 +5,20 @@ final static int DRAW = 2;
 final static int GO_TO_START  = 3;
 final static int DRAW_SEGMENT = 4;
 final static int NEXT_SEGMENT = 5;
+/*
+if(HAS_CAMERA_OF)
+     {
+        updateOSCPosition(endX,endY,c); 
+     }
+     */
 
 
-
-final static String fileName = "000_log.txt";
+final static String fileName = "TBP/000_log.txt";//"20_34_log.txt";//"calibrate_test.txt";//"17_55_log.txt";//"calibrate_test.txt";//"PSHYCO/001_log.txt";
 
 
 final static boolean multipleDrawings = true;
-final static int numDrawings = 29;
-int countDrawings = 1;
+final static int numDrawings = 8;
+int countDrawings = 0;
 
 
 int state = INIT;
@@ -41,9 +46,11 @@ void changeState(int newState){
     case IDLE:
     break;
     case DRAW:
+    
     break;
   }
   state = newState;
+  
 }
 
 void sampleDraw()
@@ -64,6 +71,7 @@ void startDrawing()
   main.startDrawing();
 
   changeState(GO_TO_START);
+  println("size segments:"+segments.size());
   segments.get(segmentCounter).goToStart();
   //main.goToStart(segments.get(segmentCounter).startX,segments.get(segmentCounter).startY);
   
@@ -90,6 +98,7 @@ void arrivedToPoint()
      {
        changeState(GO_TO_START);
        segments.get(segmentCounter).goToStart();
+       updateOSCPosition(segments.get(segmentCounter).startX,segments.get(segmentCounter).startY,segments.get(segmentCounter).col,segmentCounter,segments.size()); 
      }
   }
   else if(state == GO_TO_START)
@@ -97,6 +106,7 @@ void arrivedToPoint()
     //print the segment
     changeState(DRAW_SEGMENT);
     segments.get(segmentCounter).goToEnd();
+     updateOSCPosition(segments.get(segmentCounter).endX,segments.get(segmentCounter).endY,segments.get(segmentCounter).col,segmentCounter,segments.size());
   }
 }
 void stopRobot()
@@ -109,13 +119,14 @@ void stopRobot()
        
        segments = new ArrayList();
        String name = (String)((countDrawings<10)?("00"+countDrawings):((countDrawings>=10 && countDrawings<100)?("0"+countDrawings):(countDrawings+"")));
-       boolean fileExists = loadImgFromFile(name+"_log.txt");
+       boolean fileExists = loadImgFromFile("TBP/"+name+"_log.txt");
        countDrawings++;
       
        if(fileExists)
        {
           main.closeShutter();
-          delay(2000);
+          
+          delay(12000);
           startDrawing();
        }
        else

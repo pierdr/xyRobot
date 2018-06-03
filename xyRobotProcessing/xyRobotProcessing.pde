@@ -20,17 +20,20 @@ void setup()
   size(720,320);
   initP5();
 
-  main = new controller(this,true);//TRUE -> simulation FALSE -> realmotors 
-  
+  main = new controller(this,false);//TRUE -> simulation FALSE -> realmotors 
+  initOSC();
   //initSerial();
   initLogic();
- // initTramotana();
+  
+  main.calibrate();
+  //initTramotana();
 }
 
 void draw()
 {
   background(255);
   //serialEvent();
+  text(state,100,100);
   main.updateSerial();
   color(0);
   text(segmentCounter,100,300);

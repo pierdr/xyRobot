@@ -1,13 +1,13 @@
  //550*MM_TO_STEPS
 
-#define HALF_L 550          
-#define FRAME_ORIGIN_X 320  
-#define FRAME_ORIGIN_Y 330 
+#define HALF_L          535 //550 (white robot)          
+#define FRAME_ORIGIN_X  320 //320 (white robot)  
+#define FRAME_ORIGIN_Y  270 //330 (white robot)
 
-#define MM_TO_STEPS 25 //9.3
+#define MM_TO_STEPS 27.3//codame robot 71.4285714(steps/mm ) //(white robot on the window) 25 // previous9.3 -- 
 
-#define L_ZERO_STEP 645*MM_TO_STEPS
-#define R_ZERO_STEP 690*MM_TO_STEPS
+#define L_ZERO_STEP 600*MM_TO_STEPS//645*MM_TO_STEPS (white robot)
+#define R_ZERO_STEP 600*MM_TO_STEPS//690*MM_TO_STEPS (white robot)
 
 #define INIT -1
 #define DRAW 0
@@ -74,7 +74,7 @@ class MotorsManager
       if(state==DRAW)
       {   
            //determine next steps
-            lerpValue+=0.005;
+            lerpValue+=0.0006;//was 0.005
             if(lerpValue>=1.0)
             {
               lerpValue = 1.0;
