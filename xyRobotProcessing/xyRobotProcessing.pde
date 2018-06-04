@@ -24,7 +24,7 @@ void setup()
   initOSC();
   //initSerial();
   initLogic();
-  
+  frameRate(24);
   main.calibrate();
   //initTramotana();
 }

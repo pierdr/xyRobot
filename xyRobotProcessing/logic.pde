@@ -13,10 +13,10 @@ if(HAS_CAMERA_OF)
      */
 
 
-final static String fileName = "TBP/000_log.txt";//"20_34_log.txt";//"calibrate_test.txt";//"17_55_log.txt";//"calibrate_test.txt";//"PSHYCO/001_log.txt";
+final static String fileName = "28_38_log.txt";//"20_34_log.txt";//"calibrate_test.txt";//"17_55_log.txt";//"calibrate_test.txt";//"PSHYCO/001_log.txt";
 
 
-final static boolean multipleDrawings = true;
+final static boolean multipleDrawings = false;
 final static int numDrawings = 8;
 int countDrawings = 0;
 
@@ -126,7 +126,7 @@ void stopRobot()
        {
           main.closeShutter();
           
-          delay(12000);
+          delay(32000);
           startDrawing();
        }
        else
@@ -174,11 +174,11 @@ boolean loadImgFromFile(String fileName)
     if(result.length>=6)
     {
     //println(result[6],parseFloat(result[6]),parseInt(result[5]),parseInt(result[6]));
-    segments.add(new segment(parseInt(result[0]),parseInt(result[1]),parseInt(result[2]),parseInt(result[3]),color(parseInt(result[4]),parseInt(result[5]),parseInt(result[6]))));
+    segments.add(new segment(parseInt(result[2]),parseInt(result[3]),parseInt(result[0]),parseInt(result[1]),color(parseInt(result[4]),parseInt(result[5]),parseInt(result[6]))));
     }  
   }
   
-  sortSegments();
+  //sortSegments();
   return true;
   
 }

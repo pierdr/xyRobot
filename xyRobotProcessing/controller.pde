@@ -39,8 +39,8 @@ class controller{
         robotHead = new Tramontana(parent,"10.0.1.2");
 
         
-        println("serial");
-        String portName = Serial.list()[1];
+        println(Serial.list());
+        String portName = Serial.list()[2];
         
         arduino = new Serial(parent, portName, 115200);
       }
