@@ -13,12 +13,12 @@ if(HAS_CAMERA_OF)
      */
 
 
-final static String fileName = "28_38_log.txt";//"20_34_log.txt";//"calibrate_test.txt";//"17_55_log.txt";//"calibrate_test.txt";//"PSHYCO/001_log.txt";
+final static String fileName = "faces2/000.txt";//"PSYCHO640/039.txt";//"8_0_log.txt";//"20_34_log.txt";//"calibrate_test.txt";//"17_55_log.txt";//"calibrate_test.txt";//"PSHYCO/001_log.txt";
 
 
-final static boolean multipleDrawings = false;
-final static int numDrawings = 8;
-int countDrawings = 0;
+final static boolean multipleDrawings = true;
+final static int numDrawings = 92;
+int countDrawings = 1;
 
 
 int state = INIT;
@@ -72,6 +72,7 @@ void startDrawing()
 
   changeState(GO_TO_START);
   println("size segments:"+segments.size());
+  
   segments.get(segmentCounter).goToStart();
   //main.goToStart(segments.get(segmentCounter).startX,segments.get(segmentCounter).startY);
   
@@ -119,14 +120,15 @@ void stopRobot()
        
        segments = new ArrayList();
        String name = (String)((countDrawings<10)?("00"+countDrawings):((countDrawings>=10 && countDrawings<100)?("0"+countDrawings):(countDrawings+"")));
-       boolean fileExists = loadImgFromFile("TBP/"+name+"_log.txt");
+       boolean fileExists = loadImgFromFile("faces2/"+name+".txt");
        countDrawings++;
       
-       if(fileExists)
+       if(fileExists && segments.size()>0)
        {
           main.closeShutter();
           
-          delay(32000);
+          delay(12200);
+         
           startDrawing();
        }
        else
@@ -169,21 +171,37 @@ boolean loadImgFromFile(String fileName)
   }
   println("load");
   String[] lines = loadStrings(fileName);
+  int x1,y1,x2,y2;
+  
   for (int i = 0 ; i < lines.length; i++) {
     String result[] = split(lines[i], ',');
     if(result.length>=6)
     {
     //println(result[6],parseFloat(result[6]),parseInt(result[5]),parseInt(result[6]));
-    segments.add(new segment(parseInt(result[2]),parseInt(result[3]),parseInt(result[0]),parseInt(result[1]),color(parseInt(result[4]),parseInt(result[5]),parseInt(result[6]))));
+    x1 = constrain((int)(((float)parseInt(result[2]))*1.4),0,640);
+    y1 = constrain((int)(((float)parseInt(result[3]))*1.4),0,640);
+    x2 = constrain((int)(((float)parseInt(result[0]))*1.4),0,640);
+    y2 = constrain((int)(((float)parseInt(result[1]))*1.4),0,640);
+    segments.add(new segment(x1,y1,x2,y2,color(parseInt(result[4]),parseInt(result[5]),parseInt(result[6]))));
     }  
   }
-  
-  //sortSegments();
+  try
+  {
+    sortSegments();
+  }
+  catch(Exception e)
+  {
+    println(e);
+  }
   return true;
   
 }
 void sortSegments()
 {
+  if(segments.size()==0)
+  {
+    return;
+  }
   ArrayList<segment> unorderedSegments=new ArrayList();
   for(int i=0;i<segments.size();i++)
   {
@@ -191,6 +209,7 @@ void sortSegments()
   }
   segments.clear();
   int countTmp = 0;
+  
   segment focusSegment = unorderedSegments.get(0);
   int X1 = 10;
   int Y1 = 10;

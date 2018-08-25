@@ -33,8 +33,13 @@ void draw()
 {
   background(255);
   //serialEvent();
-  text(state,100,100);
+  
   main.updateSerial();
-  color(0);
-  text(segmentCounter,100,300);
+  fill(0);
+  text("state:",20,200);
+  text(state,90,20);
+  text("segments:",20,240);
+  text(segmentCounter,90,240);
+  text("drawing:",20,280);
+  text(countDrawings,90,280);
 }

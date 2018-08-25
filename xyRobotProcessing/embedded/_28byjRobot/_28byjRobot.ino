@@ -55,7 +55,9 @@ void setup() {
     Serial.begin(115200);
     mm.addRightMotor(11,10,9,8,false);
 //    mm.addRightMotor(4,5,6,7,true);
-    mm.addLeftMotor(7,6,5,4,false);
+//    mm.addLeftMotor(14,15,16,17,true);//was true in codame
+
+    mm.addLeftMotor(4,5,6,7,false);//was true in codame
 }
 
 
