@@ -5,6 +5,8 @@ final static int DRAW = 2;
 final static int GO_TO_START  = 3;
 final static int DRAW_SEGMENT = 4;
 final static int NEXT_SEGMENT = 5;
+
+final static float SCALE_FACTOR = 1.0;
 /*
 if(HAS_CAMERA_OF)
      {
@@ -178,10 +180,10 @@ boolean loadImgFromFile(String fileName)
     if(result.length>=6)
     {
     //println(result[6],parseFloat(result[6]),parseInt(result[5]),parseInt(result[6]));
-    x1 = constrain((int)(((float)parseInt(result[2]))*1.4),0,640);
-    y1 = constrain((int)(((float)parseInt(result[3]))*1.4),0,640);
-    x2 = constrain((int)(((float)parseInt(result[0]))*1.4),0,640);
-    y2 = constrain((int)(((float)parseInt(result[1]))*1.4),0,640);
+    x1 = constrain((int)(((float)parseInt(result[2]))*SCALE_FACTOR),0,640);
+    y1 = constrain((int)(((float)parseInt(result[3]))*SCALE_FACTOR),0,640);
+    x2 = constrain((int)(((float)parseInt(result[0]))*SCALE_FACTOR),0,640);
+    y2 = constrain((int)(((float)parseInt(result[1]))*SCALE_FACTOR),0,640);
     segments.add(new segment(x1,y1,x2,y2,color(parseInt(result[4]),parseInt(result[5]),parseInt(result[6]))));
     }  
   }
